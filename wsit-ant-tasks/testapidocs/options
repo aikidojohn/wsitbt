@@ -1,0 +1,73 @@
+-classpath
+'F:/asisource/opensource/wsitbt/master/wsit-ant-tasks/target/classes;F:/asisource/opensource/wsitbt/master/wsit-ant-tasks/target/test-classes;C:/Users/jhite/.m2/repository/org/apache/ant/ant-junit/1.8.2/ant-junit-1.8.2.jar;F:/asisource/opensource/wsitbt/master/wsit-bt-core/target/classes;C:/Users/jhite/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar;C:/Users/jhite/.m2/repository/org/apache/ant/ant-launcher/1.8.2/ant-launcher-1.8.2.jar;C:/Users/jhite/.m2/repository/org/apache/ant/ant/1.8.2/ant-1.8.2.jar;C:/Users/jhite/.m2/repository/junit/junit/4.10/junit-4.10.jar'
+-encoding
+'UTF-8'
+-protected
+-quiet
+-sourcepath
+'F:/asisource/opensource/wsitbt/master/wsit-ant-tasks/src/test/java'
+-author
+-bottom
+'Copyright &#169; 2011-2012 <a href="http://www.appsecinc.com">Application Security, Inc</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'F:/asisource/opensource/wsitbt/master/wsit-ant-tasks/target/site/testapidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'WSIT Ant Tasks 1.0.8-SNAPSHOT Test API'
+-link
+'../apidocs'
+-link
+'http://java.sun.com/j2se/1.5.0/docs/api'
+-linkoffline
+'http://aikidojohn.github.com/wsitbt/wsit-bt-core/apidocs' 'F:/asisource/opensource/wsitbt/master/wsit-bt-core/target/site/testapidocs'
+-linkoffline
+'http://aikidojohn.github.com/wsitbt/wsit-maven-plugin/apidocs' 'F:/asisource/opensource/wsitbt/master/wsit-maven-plugin/target/site/testapidocs'
+-linkoffline
+'http://aikidojohn.github.com/wsitbt/wsit-maven-plugin-itest/apidocs' 'F:/asisource/opensource/wsitbt/master/wsit-maven-plugin-itest/target/site/testapidocs'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoAggregatorTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoComponentFieldTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoConfiguratorTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoExecuteTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoExecutionStrategyTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoGoalTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoInheritByDefaultTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoInstantiationStrategyTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoParameterFieldTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoPhaseTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoReadOnlyFieldTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiredFieldTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresDependencyCollectionTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresDependencyResolutionTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresDirectInvocationTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresOnLineTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresProjectTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoRequiresReportsTypeTaglet'
+-taglet
+'org.apache.maven.tools.plugin.javadoc.MojoThreadSafeTypeTaglet'
+-tagletpath
+'C:/Users/jhite/.m2/repository/org/apache/maven/plugin-tools/maven-plugin-tools-javadoc/2.9/maven-plugin-tools-javadoc-2.9.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-profile/2.0/maven-profile-2.0.jar;C:/Users/jhite/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-repository-metadata/2.0/maven-repository-metadata-2.0.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-plugin-descriptor/2.0.6/maven-plugin-descriptor-2.0.6.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-artifact-manager/2.0/maven-artifact-manager-2.0.jar;C:/Program Files/Java/jdk1.6.0_30/jre/../lib/tools.jar;C:/Users/jhite/.m2/repository/org/apache/maven/reporting/maven-reporting-api/2.0.6/maven-reporting-api-2.0.6.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-project/2.0/maven-project-2.0.jar;C:/Users/jhite/.m2/repository/junit/junit/3.8.2/junit-3.8.2.jar;C:/Users/jhite/.m2/repository/com/thoughtworks/qdox/qdox/1.11/qdox-1.11.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-plugin-api/2.0.6/maven-plugin-api-2.0.6.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-artifact/2.0/maven-artifact-2.0.jar;C:/Users/jhite/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-alpha-5/wagon-provider-api-1.0-alpha-5.jar;C:/Users/jhite/.m2/repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar;C:/Users/jhite/.m2/repository/org/apache/maven/plugin-tools/maven-plugin-tools-java/2.9/maven-plugin-tools-java-2.9.jar;C:/Users/jhite/.m2/repository/org/apache/maven/plugin-tools/maven-plugin-tools-api/2.9/maven-plugin-tools-api-2.9.jar;C:/Users/jhite/.m2/repository/org/codehaus/plexus/plexus-utils/2.0.5/plexus-utils-2.0.5.jar;C:/Users/jhite/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.jar;C:/Users/jhite/.m2/repository/org/apache/maven/maven-model/2.0/maven-model-2.0.jar;C:/Users/jhite/.m2/repository/net/sf/jtidy/jtidy/r938/jtidy-r938.jar'
+-use
+-version
+-windowtitle
+'WSIT Ant Tasks 1.0.8-SNAPSHOT Test API'
