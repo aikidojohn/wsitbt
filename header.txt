@@ -1,4 +1,4 @@
-WSIT Build Tools (http://wsitbt.codeplex.com)
+WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
 
 Copyright (c) 2011 Application Security, Inc.
 

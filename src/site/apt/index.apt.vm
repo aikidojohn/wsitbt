@@ -1,5 +1,5 @@
 #*
- * WSIT Build Tools (http://wsitbt.codeplex.com)
+ * WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
  *
  * Copyright (c) 2011 Application Security, Inc.
  *
@@ -35,7 +35,7 @@ Description
 
         *** {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/bundle/${project.version}/bundle-${project.version}.zip}}
 
-        *** or from the {{{${project.url}/releases}Downloads}} website.
+        *** or from the {{{${github-url}/downloads}Downloads}} website.
 
       The ant task jars mentioned above include all the classes needed to use the ant tasks (for example, the 'core' classes are included).
 
@@ -53,10 +53,9 @@ Description
 
   See {{{./gettingStarted.html}Getting Started}} for instructions on how to use these tools.
 
-  Codeplex does not support directly publishing web content, so
-  the maven generated web site is published here: {{{${wsitbt-site-deployed}}Maven Generated Site}}
+  The Maven generated web site is published here: {{{${wsitbt-site-deployed}}Maven Generated Site}}
 
-  There is also obsolete wiki documentation on codeplex: {{${project.url}/documentation}}.
+  There is also obsolete wiki documentation on codeplex: {{http://wsitbt.codeplex.com/documentation}}.
 
 
 * {Docs on docs}
@@ -208,16 +207,6 @@ mvn release:perform
 mvn release:rollback
 -------------------
 
-        <<NOTE>>: The <<<prepare>>> and/or <<<perform>>> process may create "tags" in the mercurial bank.
-        Currently the "clean" and "rollback" operations do not appear to remove these tags, so
-        you must manually remove such a tag before re-trying the release. You can remove the tag
-        via:
-
--------------------
-hg tag --remove <tag name>
-hg push
--------------------
-
     * <<Post Release Steps>> - After the maven 'release' if finished, you still need to do a few housekeeping tasks:
 
         **
@@ -227,19 +216,10 @@ hg push
 
             You need to login to the {{{http://oss.sonatype.org/}Sonatype Staging Repository}} and <close>, then <release> the newly published artifacts in the Sonatype Staging Repository.
 
-        ** <<Create new Codeplex Release>> - Create a new 'Release' under the 'Downloads' tab on the codeplex site: {{${project.url}}}.
+        ** <<Create new Github Download>> - Uplaod the new bundle zip file under the 'Downloads' tab on the github site: {{${github-url}}}.
 
            Set the new bundle zip file as the download file. For example, download {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/bundle/${project.version}/bundle-${project.version}.zip}}
            from the maven central repository, and make that file the download file for the new release.
 
            If the central repo is not yet synchronized with the Sonatype repo,
            you could download the bundle file from the {{{https://oss.sonatype.org/content/repositories/releases}Sonatype Releases Repository}}.
-
-           In the 'Release Details' section, set 'Development Status' to: 'Beta', 'Show to public?': Yes, 'Recommended release?': Yes, 'Replace recommended release?': Yes.
-
-           In the 'Release Details' section, add the 'Change set number' from the label created in hg when you ran 'mvn release'.
-           You can find the 'Change set number' by looking under the 'Source' tab on codeplex, and look for the a row with a comment like:
-
-             <<<wsit-build-tools-project-1.0.3 [maven-release-plugin] prepare release wsit-build-tools-project-1.0.3>>>
-
-           Copy the 'Change set' value of that row and paste it into the 'Change set number' field in the 'Release Details' section.

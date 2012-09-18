@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    WSIT Build Tools (http://wsitbt.codeplex.com)
+    WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
 
     Copyright (c) 2011 Application Security, Inc.
 
@@ -14,7 +14,6 @@
         Application Security, Inc.
 
 -->
-
 <project xmlns="http://maven.apache.org/DECORATION/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">

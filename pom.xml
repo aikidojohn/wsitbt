@@ -11,7 +11,7 @@
     </parent>
 
 
-    <groupId>com.codeplex.wsitbt</groupId>
+    <groupId>com.github.wsitbt</groupId>
     <artifactId>wsit-build-tools-project</artifactId>
     <packaging>pom</packaging>
     <version>1.0.8-SNAPSHOT</version>
@@ -20,7 +20,7 @@
         WSIT Build Tools provides a set of Ant tasks and Maven mojos that generate WSIT configuration files
         for Metro web services.
     </description>
-    <url>http://wsitbt.codeplex.com</url>
+    <url>http://aikidojohn.github.com/wsitbt</url>
 
     <inceptionYear>2011</inceptionYear>
 
@@ -39,20 +39,14 @@
     
     <scm>
         <url>${wsitbt-scm-baseurl}</url>
-        <connection>scm:hg:${wsitbt-scm-baseurl}</connection>
-        <developerConnection>scm:hg:${wsitbt-scm-baseurl}</developerConnection>
+        <connection>scm:git:https://github.com/aikidojohn/wsitbt.git</connection>
+        <developerConnection>scm:git:https://github.com/aikidojohn/wsitbt.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>http://wsitbt.codeplex.com/workitem/list/basic</url>
+        <url>http://github.com/aikidojohn/wsitbt/issues</url>
     </issueManagement>
 
-    <mailingLists>
-        <mailingList>
-            <post>http://wsitbt.codeplex.com/discussions/create/</post>
-            <archive>http://wsitbt.codeplex.com/discussions/</archive>
-        </mailingList>
-    </mailingLists>
 
     <distributionManagement>
         <!-- @todo Figure out how to publish the generated site on codeplex,
@@ -93,8 +87,8 @@
 
         <wsitbt-junit-version>4.10</wsitbt-junit-version>
 
-        <wsitbt-scm-baseurl>https://hg01.codeplex.com/wsitbt/</wsitbt-scm-baseurl>
-        <wsitbt-site-deployed>http://wsitbt.sourceforge.net/</wsitbt-site-deployed>
+        <wsitbt-site-deployed>http://aikidojohn.github.com/wsitbt</wsitbt-site-deployed>
+        <github-url>https://github.com/aikidojohn/wsitbt</github-url>
     </properties>
 
     <build>
@@ -334,6 +328,7 @@
 
                     <excludes>
                         <exclude>.hgignore</exclude>
+                        <exclude>.gitignore</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -546,7 +541,7 @@
                 <artifactId>maven-changelog-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <dateFormat>EEE MMM dd hh:mm:ss yyyy Z</dateFormat>
+                    <dateFormat>yyyy-mm-dd kk:mm:ss Z</dateFormat>
                 </configuration>
             </plugin>
 

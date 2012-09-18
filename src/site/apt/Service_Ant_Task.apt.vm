@@ -1,5 +1,5 @@
 #*
- * WSIT Build Tools (http://wsitbt.codeplex.com)
+ * WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
  *
  * Copyright (c) 2011 Application Security, Inc.
  *
@@ -11,7 +11,6 @@
  * Contributors:
  *     Application Security, Inc.
  *#
-
 The Service Task
 
     The service task currently is only capable of merging an existing WS-Policy fragment with a WSDL to create the server side WSIT configuration. Here are the properties that can be set on the wsit-service element.

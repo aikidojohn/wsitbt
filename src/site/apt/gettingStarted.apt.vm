@@ -1,5 +1,5 @@
 #*
- * WSIT Build Tools (http://wsitbt.codeplex.com)
+ * WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
  *
  * Copyright (c) 2011 Application Security, Inc.
  *
@@ -11,7 +11,6 @@
  * Contributors:
  *     Application Security, Inc.
  *#
-
 Getting Started with Ant
 
     First, declare the ant tasks in your ant build. You may define them all at once using the antlib.xml

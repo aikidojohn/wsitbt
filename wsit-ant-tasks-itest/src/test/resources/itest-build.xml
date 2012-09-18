@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 
-    WSIT Build Tools (http://wsitbt.codeplex.com)
+    WSIT Build Tools (http://aikidojohn.github.com/wsitbt/)
 
     Copyright (c) 2011 Application Security, Inc.
 
@@ -14,7 +14,6 @@
         Application Security, Inc.
 
 -->
-
 <project name="AssetImporter" default="build" basedir=".">
 
     <target name="build">
