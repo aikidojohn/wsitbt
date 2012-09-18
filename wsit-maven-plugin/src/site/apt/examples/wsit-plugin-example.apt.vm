@@ -1,0 +1,106 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+            ------
+            WSIT Maven Plugin
+            ------
+            John Hite, Dan Rollo
+            ------
+            15 Aug 2011
+            ------
+
+Example
+
+    Declare the maven plugin in then <<<plugins>>> section of your pom.xml.
+
+-------------------
+    ...
+    <build>
+        ...
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wsit-maven-plugin</artifactId>
+                <version>${project.version}</version>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+    ...
+-------------------
+
+    Then declare the specific plugin goals you wish to execute via the <<<executions>>> tag.
+
+-------------------
+    ...
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wsit-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>doClean</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <file>TestService.xml</file>
+                            <todir>myMojoITestOutputDir</todir>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>doClient</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>client</goal>
+                        </goals>
+                        <configuration>
+                            <outputdir>myMojoITestOutputDir</outputdir>
+                            <wsdl>TestService.xml</wsdl>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>doService</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>service</goal>
+                        </goals>
+                        <configuration>
+                            <outputdir>myMojoITestOutputDir</outputdir>
+                            <wsdl>TestService.xml</wsdl>
+                            <policy>ServicePolicy.xml</policy>
+                            <class>com.appsec.PingService</class>
+
+                            <!-- Note: tag names are case sensitive here (unlike in ant task).
+                            Using the wrong case (for example: bindingPolicy) will give an error like:
+                            Caused by: java.lang.IllegalArgumentException: Policy 'wsit-service.bindingpolicy' does not exist.
+                            -->
+                            <bindingpolicy>WSTrustPolicy</bindingpolicy>
+                            <inputpolicy>InputPolicy</inputpolicy>
+                            <outputpolicy>OutputPolicy</outputpolicy>
+                            <faultpolicy>FaultPolicy</faultpolicy>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    ...
+-------------------

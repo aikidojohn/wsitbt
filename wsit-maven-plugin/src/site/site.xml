@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    WSIT Build Tools (http://wsitbt.codeplex.com)
+
+    Copyright (c) 2011 Application Security, Inc.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Application Security, Inc.
+
+-->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+
+    <body>
+        <menu ref="parent" />
+        <menu name="Overview">
+            <item name="Description" href="index.html"/>
+            <item name="Goals" href="plugin-info.html"/>
+            <item name="Usage" href="usage.html"/>
+            <item name="FAQ" href="faq.html"/>
+        </menu>
+        <menu name="Examples">
+            <item name="Plugin usage example" href="examples/wsit-plugin-example.html" />
+        </menu>
+        <menu ref="modules" />
+        <menu ref="reports" />
+    </body>
+</project>

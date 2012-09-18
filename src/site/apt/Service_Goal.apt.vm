@@ -1,0 +1,63 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+
+The Service Goal
+
+    See the documentation for the Ant task: {{{./Service_Ant_Task.html}wsit-service}}
+     and {{{./wsit-maven-plugin/service-mojo.html}service goal parameters}} for details on available settings.
+
+    Example:
+
+-------------------
+    ...
+    <build>
+        ...
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wsit-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>doService</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>service</goal>
+                        </goals>
+                        <configuration>
+                            <outputdir>myMojoITestOutputDir</outputdir>
+                            <wsdl>TestService.xml</wsdl>
+                            <policy>ServicePolicy.xml</policy>
+                            <classname>com.appsec.PingService</classname>
+
+                            <!-- Note: tag names are case sensitive here (unlike in ant task).
+                            Using the wrong case (for exmample: bindingPolicy) will give an error like:
+                            Caused by: java.lang.IllegalArgumentException: Policy 'wsit-service.bindingpolicy' does not exist.
+                            -->
+                            <bindingpolicy>WSTrustPolicy</bindingpolicy>
+                            <inputpolicy>InputPolicy</inputpolicy>
+                            <outputpolicy>OutputPolicy</outputpolicy>
+                            <faultpolicy>FaultPolicy</faultpolicy>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+    ...
+-------------------
+
+    @todo Find a way to ensure invalid parameters cause an error in plugin goals.

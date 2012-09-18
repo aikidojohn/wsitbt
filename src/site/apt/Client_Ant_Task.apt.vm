@@ -1,0 +1,254 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+
+The Client Task
+
+    The client task is probably one of the most useful tasks.
+    The client task can take any service WSDL and add a WSIT configuration policy.
+    Here are the properties that can be set on the wsit-client element.
+
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| wsdl              | The WSDL file for which a wsit-client.xml will be created.        | yes           |
+*-------------------+-------------------------------------------------------------------+---------------+
+| outputdir         | The directory where the generated files will be saved.            | yes           |
+*-------------------+-------------------------------------------------------------------+---------------+
+| policy            | Specify a WS-Policy fragment to merge into the WSIT               | no            |
+|                   | configuration.
+*-------------------+-------------------------------------------------------------------+---------------+
+| bindingpolicy     | If policy is also specified, this property is used to             | yes – if      |
+|                   | specify the id of the desired policy to apply. If                 | policy is specified |
+|                   | policy is not set, this name will be used as the name             |               |
+|                   | of the generated policy.                                          | no – otherwise|
+*-------------------+-------------------------------------------------------------------+---------------+
+| outputfile        | Overrides the default filename for the output file. The           | no            |
+|                   | default filename is the same as the WSDL filename except          |               |
+|                   | with a .xml extension.                                            |               |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+    Example:
+
+-------------------
+    <wsit-client wsdl="MyService.wsdl" outputdir="generated" policy="MyClientPolicy.xml" bindingpolicy="SecureBinding" />
+-------------------
+
+    This example will merge the MyClientPolicy.xml and MyService.wsdl into a WSIT configuration file called MyService.xml. MyService.xml and a generated wsit-client.xml will be placed into the folder “generated.�? If the “generated�? folder already contains a wsit-client.xml file, that file will be updated.
+
+
+
+    The following sub-elements can be configured on the client task to configure client credentials or callback handlers.
+
+
+Callback
+
+        The callback element is used to specify various callback handlers. It can be used to configure username callback,
+        password callback, SAML callback, xwss \ calback and jmac callback handlers.
+        The following are the allowed attributes for the callback element.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| usernamehandler   | The fully qualified classname of the username callback handler. The callback handler must implement javax.security.auth.callback.CallbackHandler and it must handle the callback javax.security.auth.callback.NameCallback    | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| passwordhandler   | The fully qualified classname of the password callback handler. The callback handler must implement javax.security.auth.callback.CallbackHandler and it must handle the callback javax.security.auth.callback.PasswordCallback | no   |
+*-------------------+-------------------------------------------------------------------+---------------+
+| samlhandler       | The fully qualified classname of the SAML callback handler. The callback handler must implement javax.security.auth.callback.CallbackHandler and it must handle the callback com.sun.xml.wss.impl.callback.SAMLCallback   | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| xwsssCallbackHandler | The fully qualified classname of a callback to override the DefaultCallbackHandler. This is used in non-GlassFish containers to gain complete control over where to retrieve keys, usernames, passwords, etc.  | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| jmacCallbackHandler | The fully qualified classname of a callback to override the DefaultCallbackHandler. This is used in GlassFish to gain complete control over where to retrieve keys, usernames, passwords, etc.  | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+        Example:
+
+-------------------
+<wsit-client wsdl="MyService.wsdl" outputdir="generated">
+    <callback usernameHandler="com.example.UsernameHandler" passwordHandler="com.examle.PasswordHandler" />
+</wsit-client>
+-------------------
+
+        This example will add a policy fragment that contains username and password handlers to the MyService.xml WSIT configuration file. The generated policy fragment will look like:
+
+-------------------
+<wsp:Policy wsu:Id="Client_BindingPolicy">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sc1:CallbackHandlerConfiguration xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+         wspp:visibility="private" xmlns:sc1="http://schemas.sun.com/2006/03/wss/client">
+        <sc1:CallbackHandler classname="com.examle.UsernameHandler" name="usernameHandler"/>
+        <sc1:CallbackHandler classname="com.example.PasswordHandler" name="passwordHandler"/>
+      </sc1:CallbackHandlerConfiguration>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+-------------------
+
+
+Truststore
+
+        The truststore element can be used to configure the location of the truststore that WSIT will use when verifying the validity of certificates.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| callbackhandler   | The fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callback com.sun.xml.wss.impl.callback.KeyStoreCallback. This is used to provide the keystore programatically instead of using the location and type attributes.    | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| location          | The absolute path to the truststore file.                         | no            |
+*-------------------+-------------------------------------------------------------------+---------------+
+| type              | The type of truststore file.                                      | no – defaults to JKS |
+*-------------------+-------------------------------------------------------------------+---------------+
+| storepass         | The password for the truststore or a fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callback javax.security.auth.callback.PasswordCallback.    | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| peeralias         | The alias of the peer entity.                                     | no            |
+*-------------------+-------------------------------------------------------------------+---------------+
+| certSelector      | The fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callback  javax.security.cert.CertSelector. | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+        Example:
+
+-------------------
+<wsit-client wsdl="MyService.wsdl" outputdir="generated">
+    <truststore location="c:\MyTrust.jks" storepass="password123" peeralias="example-server" />
+</wsit-client>
+-------------------
+
+        The generated policy fragment will look like:
+
+-------------------
+<wsp:Policy wsu:Id="Client_BindingPolicy">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sc1:TrustStore location="c:\MyTrust.jks" peeralias="example-server"
+         storepass="password123" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+         wspp:visibility="private" xmlns:sc1="http://schemas.sun.com/2006/03/wss/client"/>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+-------------------
+
+
+Keystore
+
+        The keystore element can be used to configure the location of the keystore that WSIT will use with security mechanisms that require X.509 certificates.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| callbackhandler   | The fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callbacks com.sun.xml.wss.impl.callback.KeyStoreCallback and com.sun.xml.wss.impl.callback.PrivateKeyCallback. This is used to provide the keystore and keys programatically instead of using the location, type, storepass, and keypass attributes.    | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| location          | The absolute path to the ketstore file.                           | no            |
+*-------------------+-------------------------------------------------------------------+---------------+
+| type              | The type of keystore file.                                        | no            |
+*-------------------+-------------------------------------------------------------------+---------------+
+| storepass         | The password for the truststore or a fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callback javax.security.auth.callback.PasswordCallback.    | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| alias             | The certificate alias from the keystore to be used for signatures. This takes precedence over aliasSelector.  | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| aliasselector     | The fully qualified classname of a class that implements com.sun.xml.wss.AliasSelector.   | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| keypass           | The password for the private key or the fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler and handles the callback javax.security.auth.callback.PasswordCallback. | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+        Example:
+
+-------------------
+<wsit-client wsdl="MyService.wsdl" outputdir="generated">
+    <keystore location="c:\MyKeystore.jks" storepass="password123"
+        keypass="password123" aliasSelector="com.example.AliasSelector" />
+</wsit-client>
+-------------------
+
+        The generated policy fragment will look like:
+
+-------------------
+<wsp:Policy wsu:Id="Client_BindingPolicy">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sc1:KeyStore aliasSelector="com.example.AliasSelector" keypass="password123"
+        location="c:\MyKeystore.jks" storepass="password123" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+        wspp:visibility="private" xmlns:sc1="http://schemas.sun.com/2006/03/wss/client"/>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+-------------------
+
+
+CertStore
+
+        As an alternative to specifying a Truststore, a CertStore can be provided. The CertStore configuration gives the developer more control over where the trusted certificates are read from. With a CertStore, it is up to the developer to decide from where to read the certificates. For exmple, certirficates could be read from an LDAP directory.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| callbackhandler   | The fully qualified classname of a class that implements javax.security.auth.callback.CallbackHandler interface and handles the callback com.sun.xml.wss.impl.callback.CertStoreCallback. | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+| certselector      | The fully qualified classname of a class that implements the java.security.cert.CertSelector interface.   | no    |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+        Example:
+
+-------------------
+<certstore callbackhandler="com.example.CertStoreHandler" certselector="com.example.CertSelector" />
+-------------------
+
+        The generated policy fragment looks like:
+
+-------------------
+<wsp:Policy wsu:Id="Client_BindingPolicy">
+   <wsp:ExactlyOne>
+    <wsp:All>
+      <sc1:CertStore callbackHandler="com.example.CertStoreHandler" certSelector="com.example.CertSelector"
+         xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy" wspp:visibility="private"
+         xmlns:sc1="http://schemas.sun.com/2006/03/wss/client"/>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+-------------------
+
+
+
+SecureConversation
+
+        SecureConversation has a few client side configuration options such as session renewal and session timeout. These can be configured with the secureconversation element.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| renewExpiredSCT   | Set to true to automatically renew expired SCT tokens.            | no – defaults to false |
+*-------------------+-------------------------------------------------------------------+---------------+
+| lifetime          | The SCT session lifetime in milliseconds.                         | no – defaults to 300,000ms (5 minutes) |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+        Example:
+
+-------------------
+<secureconversation renewExpiredSCT="true" lifetime="60000" />
+-------------------
+
+        The generated policy fragment looks like:
+
+-------------------
+<wsp:Policy wsu:Id="Client_BindingPolicy">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <scc:SCClientConfiguration renewExpiredSCT="true" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+        wspp:visibility="private" xmlns:scc="http://schemas.sun.com/ws/2006/05/sc/client">
+        <scc:LifeTime>60000</scc:LifeTime>
+      </scc:SCClientConfiguration>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+-------------------

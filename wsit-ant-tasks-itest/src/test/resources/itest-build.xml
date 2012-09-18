@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    WSIT Build Tools (http://wsitbt.codeplex.com)
+
+    Copyright (c) 2011 Application Security, Inc.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Application Security, Inc.
+
+-->
+
+<project name="AssetImporter" default="build" basedir=".">
+
+    <target name="build">
+        <taskdef name="WsitCleanTask" classname="com.appsecinc.ant.WsitCleanTask"
+                 classpath="wsit-ant-tasks-${project.version}.jar"/>
+        <WsitCleanTask
+                file="TestService.xml"
+                todir="myMojoITestOutputDir"
+                />
+
+
+        <taskdef name="WsitClientTask" classname="com.appsecinc.ant.WsitClientTask"
+                 classpath="wsit-ant-tasks-${project.version}.jar"/>
+        <WsitClientTask 
+                outputDir="myMojoITestOutputDir"
+                wsdl="TestService.xml"
+                />
+
+
+        <taskdef name="WsitServiceTask" classname="com.appsecinc.ant.WsitServiceTask"
+                 classpath="wsit-ant-tasks-${project.version}.jar"/>
+        <WsitServiceTask
+                outputDir="myMojoITestOutputDir"
+                wsdl="TestService.xml"
+                policy="ServicePolicy.xml"
+                class="com.appsec.PingService"
+                bindingPolicy="WSTrustPolicy"
+                inputPolicy="InputPolicy"
+                outputPolicy="OutputPolicy"
+                />
+    </target>
+
+</project>

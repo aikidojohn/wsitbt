@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    WSIT Build Tools (http://wsitbt.codeplex.com)
+
+    Copyright (c) 2011 Application Security, Inc.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Application Security, Inc.
+
+-->
+<assembly>
+    <id>offline-zip-bundle</id>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>wsitbt</outputDirectory>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <!-- include 'staged' generated site docs. NOTE: Build with 'site:stage' to include these. -->
+        <fileSet>
+            <directory>../target/staging</directory>
+            <outputDirectory>wsitbt/docs</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>wsitbt/lib/maven</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+
+            <includes>
+                <include>${project.groupId}:wsit-bt-core</include>
+                <include>${project.groupId}:wsit-maven-plugin</include>
+            </includes>
+        </dependencySet>
+
+        <dependencySet>
+            <outputDirectory>wsitbt/lib/ant</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+
+            <includes>
+                <include>${project.groupId}:wsit-ant-tasks</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+</assembly>

@@ -1,0 +1,81 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+
+Getting Started with Ant
+
+    First, declare the ant tasks in your ant build. You may define them all at once using the antlib.xml
+
+------------------------
+    <taskdef resource="com/appsecinc/ant/antlib.xml">
+       <classpath>
+          <pathelement location="wsit-ant-tasks.jar" />
+       </classpath>
+    </taskdef>
+------------------------
+
+    Or, you can choose to include the tasks individually:
+
+------------------------
+    <taskdef name="wsit-client" classname="com.appsecinc.ant.WsitClientTask" classpath="wsit-ant-tasks.jar"/>
+    <taskdef name="wsit-service" classname="com.appsecinc.ant.WsitServiceTask" classpath="wsit-ant-tasks.jar"/>
+    <taskdef name="wsit-clean" classname="com.appsecinc.ant.WsitCleanTask" classpath="wsit-ant-tasks.jar"/>
+------------------------
+
+    Now check out the documentation on the individual tasks
+
+    * {{{./Client_Ant_Task.html}wsit-client}}
+
+    * {{{./Service_Ant_Task.html}wsit-service}}
+
+    * {{{./Clean_Ant_Task.html}wsit-clean}}
+
+
+Getting Started with Maven
+
+    First, declare the maven plugin in the <<<plugins>>> section of your pom.xml.
+
+-------------------
+    ...
+    <build>
+        ...
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wsit-maven-plugin</artifactId>
+                <version>${project.version}</version>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+    ...
+-------------------
+
+    Then declare the specific plugin goals you wish to execute via the <<<executions>>> tag.
+
+~~ @todo Update codeplex wiki page to point to these docs once they are released.
+
+    Plugin {{{./wsit-maven-plugin/plugin-info.html}Goals}} info.
+
+    * {{{./Client_Goal.html}client goal}} ({{{./wsit-maven-plugin/client-mojo.html}parameters}})
+
+    * {{{./Service_Goal.html}service goal}} ({{{./wsit-maven-plugin/service-mojo.html}parameters}})
+
+    * {{{./Clean_Goal.html}clean goal}} ({{{./wsit-maven-plugin/clean-mojo.html}parameters}})
+
+    []
+
+    The <<<plugins>>> section of <<<wsit-maven-plugin-itest/src/test/resources/com/appsec/maven/wsit/it/mojotest/pom.xml>>>
+     shows an example of using all the maven wsitbt goals.
+     That pom is the integration test of the maven plugin.

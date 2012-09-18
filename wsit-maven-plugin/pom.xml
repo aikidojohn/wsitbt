@@ -1,0 +1,136 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.codeplex.wsitbt</groupId>
+        <artifactId>wsit-build-tools-project</artifactId>
+        <version>1.0.8-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>wsit-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <name>WSIT Maven Mojo</name>
+    <description>Provides maven goals for generating WSIT client and server side configuration.</description>
+
+
+    <!-- This keeps docck happy. -->
+    <prerequisites>
+        <maven>2.1</maven>
+    </prerequisites>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.0</version>
+            <exclusions>
+                <!-- this exclusion allows for dependency convergence on latest version of junit. -->
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wsit-bt-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${wsitbt-junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <!-- avoid javadoc warnings from mojo tags -->
+                        <tagletArtifacts>
+                            <tagletArtifact>
+                                <groupId>org.apache.maven.plugin-tools</groupId>
+                                <artifactId>maven-plugin-tools-javadoc</artifactId>
+                                <version>2.9</version>
+                            </tagletArtifact>
+                        </tagletArtifacts>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+
+        <plugins>
+            <!-- currently not working without doing prior 'mvn install'
+            see:
+            http://jira.codehaus.org/browse/MENFORCER-42
+
+            partial workaround by declaring in non-bundle sub-module poms.
+            -->
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requirePluginVersions />
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+<!-- @todo Restore this plugin to validate mojo docs.
+    Currently, build only fails on Windows, and apparently related to use of javadoc plugin 2.7 and 2.8.
+    javadoc plugin v2.7 is declared in Sonatype OSS parent paom, and maybe should be updated?
+    And/or bug reported for maven-docck-plugin.
+
+            <plugin>
+                <artifactId>maven-docck-plugin</artifactId>
+                <version>1.0</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+-->
+        </plugins>
+    </build>
+
+
+    <reporting>
+        <plugins>
+            <!-- generates the plugin documentation report. -->
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

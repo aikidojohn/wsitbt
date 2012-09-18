@@ -1,0 +1,82 @@
+<!--
+
+    WSIT Build Tools (http://wsitbt.codeplex.com)
+
+    Copyright (c) 2011 Application Security, Inc.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Application Security, Inc.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>WSIT Build Tools</title>
+<style type="text/css">
+body {
+	color: #000000;
+	font-family: serif;
+	font-size: 75%;
+}
+
+a {
+	font-family: serif;
+	text-decoration: none;
+}
+
+code {
+	color: #b22222;
+	font-family: monospace;
+}
+
+table {
+    border-width: 1px; 
+    border-style: outset;
+    border-color: gray;
+    border-collapse: collapse;
+}
+
+td, th {
+    border-width: 1px;
+    padding: 2px;
+    border-style: inset;
+    border-color: gray;
+}
+</style>
+</head>
+<body>
+<h1>WSIT Build Tools ${project.version}</h1>
+<p>
+    WSIT Build Tools are a set of Maven Mojo's and Ant Tasks that can be used
+    to construct WSIT configuration files. This is particularly useful for those
+    who do not use NetBeans to develop web services and web service clients.
+    NetBeans has functionality built into the IDE to handle generating these
+    WSIT configuration files, but its difficult to get this functionality in 
+    an Ant or Maven build.
+</p>
+<p>
+    These ant tasks will allow you to generate both server and client side
+    WSIT configuration files from the WSDL of the target service. 
+</p>
+<h2>What's New</h2>
+
+Provides Ant tasks and Maven Mojo's to:
+<ul>
+	<li>Strip all WSIT configuration from a WSDL</li>
+	<li>Merge any policy fragment with an existing WSDL or WSIT configuration file</li>
+	<li>Configure client side WSIT settings for Callback Handlers, Certificate Stores, KeyStores and TrustStores</li>
+</ul>
+
+<h2>Using WSIT Build Tools</h2>
+<p>
+Please see our online documentation for WSIT Build Tools usage.
+<a href="http://wsitbt.codeplex.com/documentation">http://wsitbt.codeplex.com/documentation</a>.
+The same documentation is in the bundle.zip file under: wsitbt/docs/
+</p>
+</body>
+</html>

@@ -1,0 +1,35 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+
+Clean Task
+
+    The clean task is capable of stripping any WSIT specific configuration from a WSDL or WSIT configuration file.
+
+*-------------------+-------------------------------------------------------------------+---------------+
+|| Attribute        || Description                                                      || Required     |
+*-------------------+-------------------------------------------------------------------+---------------+
+| file              | The file to strip WSIT configuration from. Must be a wsit configuration file (starts with the wsdl document element). | yes   |
+*-------------------+-------------------------------------------------------------------+---------------+
+| todir 	        | The configuration files will be written to this directory. Either this or tofile must be specified. | yes – unless tofile is specified |
+*-------------------+-------------------------------------------------------------------+---------------+
+| tofile            | The configuration files will be written to this file. Either this or todir must be specified. | yes – unless todir is specified |
+*-------------------+-------------------------------------------------------------------+---------------+
+
+    Example:
+
+-------------------
+<wsit-clean file="MyService.wsdl" todir="generated" />
+-------------------
+
+    In this example the MyService.wsdl file would be stripped of all WSIT configuration and saved to the generated folder.

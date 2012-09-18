@@ -1,0 +1,245 @@
+#*
+ * WSIT Build Tools (http://wsitbt.codeplex.com)
+ *
+ * Copyright (c) 2011 Application Security, Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Application Security, Inc.
+ *#
+            ------
+            WSIT Build Tools
+            ------
+            John Hite, Dan Rollo
+            ------
+            15 Aug 2011
+            ------
+
+Description
+
+  ${project.description}
+
+* {Download}
+
+  ** Ant tasks
+
+      The ant tasks are available in a "version-named" jar:
+
+        *** {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/wsit-ant-tasks/${project.version}/wsit-ant-tasks-${project.version}.jar}}
+
+      and a "version-named" bundle containing a "non-version-named" jar (<<<lib/ant/wsit-ant-tasks.jar>>>) in:
+
+        *** {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/bundle/${project.version}/bundle-${project.version}.zip}}
+
+        *** or from the {{{${project.url}/releases}Downloads}} website.
+
+      The ant task jars mentioned above include all the classes needed to use the ant tasks (for example, the 'core' classes are included).
+
+  ** Maven plugin
+
+      The maven goals are automatically downloaded from the maven "central" repository when you declare the plugin in your pom.xml.
+
+      []
+
+  Prior published versions are available from the central repository: {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/}}
+
+  The project homepage is: {{${project.url}}}
+
+* {Usage}
+
+  See {{{./gettingStarted.html}Getting Started}} for instructions on how to use these tools.
+
+  Codeplex does not support directly publishing web content, so
+  the maven generated web site is published here: {{{${wsitbt-site-deployed}}Maven Generated Site}}
+
+  There is also obsolete wiki documentation on codeplex: {{${project.url}/documentation}}.
+
+
+* {Docs on docs}
+
+  The web page you are reading now is generated from the file: <<<./src/site/apt/index.apt.vm>>>. Edit that
+  file to add new documentation using the "Almost Plain Text" (APT) format.
+
+    ** To locally generate this documentation, run:
+
+-------------------
+mvn site
+-------------------
+
+    You can view the locally generated site by opening <<<target/site/index.html>>> in a browser.
+
+    ** To locally generate a fully linked site (including sub-modules), run:
+
+-------------------
+mvn site site:stage
+-------------------
+
+    You can view the complete locally generated site by opening <<<target/staging/index.html>>> in a browser.
+
+  For documentation on how to write documentation (like the documentation you see here), see the following documentation:
+   (I dare you to say that 10 times, real fast.)
+
+    * {{{http://maven.apache.org/doxia/references/apt-format.html}The APT format}}
+
+    * {{{http://maven.apache.org/doxia/references/doxia-apt.html}Enhancements to the APT format}}, particularly the
+    section: {{{http://maven.apache.org/doxia/references/doxia-apt.html#Paragraphs_in_list_items}Paragraphs in list items}}.
+
+  RTFM to WTFM.
+
+
+* {Release Steps}
+
+  Follow the steps below to do an official release of the project.
+
+    * <<License Headers>> - Some validation logic (for example the maven-license-plugin) is only executed during the
+    release process. In order to avoid validation failures during the release build, you may want to
+    manually run these checks via:
+
+-------------------
+mvn license:check
+-------------------
+
+    If some license headers are missing from files, you can use the command below to add the missing license headers:
+
+-------------------
+mvn license:format
+-------------------
+
+    * <<GPG>> - The maven-gpg-plugin is used to sign released artifacts during the "verify" phase. This plugin
+    requires some one-time setup (a native GnuPG program and your gpg key):
+
+        From {{{http://maven.apache.org/plugins/maven-gpg-plugin/usage.html}GPG Usage}}:
+
+        ** You need to have previously configured the default key.
+
+        ** <<<gpg>>> also needs to be on the search path.
+
+    To make sure you have gpg configured correctly, you can manually run the "verify" phase and mimic the release environment via:
+
+-------------------
+mvn verify -DperformRelease=true -DskipTests
+-------------------
+
+    * <<Server Settings>> - a number of additional <<<server>>> tags need to be configured to do a release.
+    You should add these to your <<<.m2/settings.xml>>> file (with your own valid user/password values of course):
+
+-------------------
+    ...
+    <servers>
+    ...
+       <!-- sonatype open source repos for sync to maven central -->
+       <server>
+           <id>sonatype-nexus-snapshots</id>
+           <username>mySonatypeUser</username>
+           <password>mySonatypePassword</password>
+       </server>
+       <server>
+           <id>sonatype-nexus-staging</id>
+           <username>mySonatypeUser</username>
+           <password>mySonatypePassword</password>
+       </server>
+
+       <!-- sourceforge login - used to publish generated maven docs -->
+       <server>
+           <id>wsitbt-site-generated</id>
+           <username>mySourceForgeUser</username>
+           <password>mySourceForgePassword</password>
+       </server>
+
+       <!-- codeplex login - to write to source code bank -->
+       <server>
+           <id>hg01.codeplex.com</id>
+           <username>myCodeplexUser</username>
+           <password>myCodeplexPassword</password>
+       </server>
+       ...
+    <servers>
+    ...
+-------------------
+
+    <<NOTE>>: The <<<perform>>> operation described below will attempt to execute the <<<site:deploy>>> goal.
+    Be sure you open and connect a SourceForge command shell before you execute the <<<perform>>> operation.
+
+-------------------
+ssh -t <mySourceForgeUser>,wsitbt@shell.sf.net create
+-------------------
+
+    This allows you to publish the generated site via the validated sourceforge shell.
+    For more info, see: {{{http://maven.apache.org/plugins/maven-site-plugin/examples/site-deploy-to-sourceforge.net.html}Deploying to sourceforge.net}}.
+
+    * <<Bundle docs>> - The 'bundle' project includes the 'staged' site docs, so be sure you have executed 'site:stage'
+     before you do the release to ensure the './target/staging' directory exists and will be included in the bundle .zip file.
+
+     @todo NOTE: This is not working as intended. Look into other options to include staged site in the bundle .zip file.
+
+-------------------
+mvn package site site:stage
+-------------------
+
+    * <<Prepare>> the release (see: {{{http://maven.apache.org/plugins/maven-release-plugin/examples/prepare-release.html}Prepare a Release}})
+
+-------------------
+mvn release:prepare
+-------------------
+
+        If any problems occur, you can immediately {{{http://maven.apache.org/plugins/maven-release-plugin/examples/rollback-release.html}rollback}} changes
+        or {{{http://maven.apache.org/plugins/maven-release-plugin/examples/clean-release.html}clean}} changes.
+
+-------------------
+mvn release:rollback
+or
+mvn release:clean
+-------------------
+
+
+    * <<Perform>> the release (see: {{{http://maven.apache.org/plugins/maven-release-plugin/examples/perform-release.html}Perform a Release}})
+
+-------------------
+mvn release:perform
+-------------------
+
+        If any problems occur, you can immediately {{{http://maven.apache.org/plugins/maven-release-plugin/examples/rollback-release.html}rollback}} changes via:
+
+-------------------
+mvn release:rollback
+-------------------
+
+        <<NOTE>>: The <<<prepare>>> and/or <<<perform>>> process may create "tags" in the mercurial bank.
+        Currently the "clean" and "rollback" operations do not appear to remove these tags, so
+        you must manually remove such a tag before re-trying the release. You can remove the tag
+        via:
+
+-------------------
+hg tag --remove <tag name>
+hg push
+-------------------
+
+    * <<Post Release Steps>> - After the maven 'release' if finished, you still need to do a few housekeeping tasks:
+
+        **
+
+         <<'Promote' the release>> - Follow the steps in {{{https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide}Sonatype OSS Maven Repository Usage Guide}},
+            particularly from step <8. Release It>.
+
+            You need to login to the {{{http://oss.sonatype.org/}Sonatype Staging Repository}} and <close>, then <release> the newly published artifacts in the Sonatype Staging Repository.
+
+        ** <<Create new Codeplex Release>> - Create a new 'Release' under the 'Downloads' tab on the codeplex site: {{${project.url}}}.
+
+           Set the new bundle zip file as the download file. For example, download {{http://repo1.maven.org/maven2/com/codeplex/wsitbt/bundle/${project.version}/bundle-${project.version}.zip}}
+           from the maven central repository, and make that file the download file for the new release.
+
+           If the central repo is not yet synchronized with the Sonatype repo,
+           you could download the bundle file from the {{{https://oss.sonatype.org/content/repositories/releases}Sonatype Releases Repository}}.
+
+           In the 'Release Details' section, set 'Development Status' to: 'Beta', 'Show to public?': Yes, 'Recommended release?': Yes, 'Replace recommended release?': Yes.
+
+           In the 'Release Details' section, add the 'Change set number' from the label created in hg when you ran 'mvn release'.
+           You can find the 'Change set number' by looking under the 'Source' tab on codeplex, and look for the a row with a comment like:
+
+             <<<wsit-build-tools-project-1.0.3 [maven-release-plugin] prepare release wsit-build-tools-project-1.0.3>>>
+
+           Copy the 'Change set' value of that row and paste it into the 'Change set number' field in the 'Release Details' section.

@@ -1,0 +1,70 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${project.groupId}</groupId>
+    <artifactId>wsit-maven-plugin-itest-impl</artifactId>
+    <version>${project.version}</version>
+
+    <description>This is an Integration Test project to exercise the maven mojo.</description>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wsit-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>doClean</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <file>TestService.xml</file>
+                            <todir>myMojoITestOutputDir</todir>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>doClient</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>client</goal>
+                        </goals>
+                        <configuration>
+                            <outputdir>myMojoITestOutputDir</outputdir>
+                            <wsdl>TestService.xml</wsdl>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>doService</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>service</goal>
+                        </goals>
+                        <configuration>
+                            <outputdir>myMojoITestOutputDir</outputdir>
+                            <wsdl>TestService.xml</wsdl>
+                            <policy>ServicePolicy.xml</policy>
+                            <classname>com.appsec.PingService</classname>
+
+                            <!-- Note: tag names are case sensitive here (unlike in ant task).
+                            Using the wrong case (for example: bindingPolicy) will give an error like:
+                            Caused by: java.lang.IllegalArgumentException: Policy 'wsit-service.bindingpolicy' does not exist.
+                            -->
+                            <bindingpolicy>WSTrustPolicy</bindingpolicy>
+                            <inputpolicy>InputPolicy</inputpolicy>
+                            <outputpolicy>OutputPolicy</outputpolicy>
+                            <faultpolicy>FaultPolicy</faultpolicy>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
